@@ -204,25 +204,45 @@ class levelingsys(commands.Cog):
 
 
     @commands.command()
-    async def leaderboard(self, ctx):
-        # DB info
-        db = sqlite3.connect('db/leveling.db')
-        cursor = db.cursor()
+    async def leaderboard(self, ctx, *, all_time=None):
+        if all_time is None:
+            # DB info
+            db = sqlite3.connect('db/leveling.db')
+            cursor = db.cursor()
 
-        # Ordering - Limit is 10
-        cursor.execute(f"SELECT userid, level, xp from users WHERE guildid = '{ctx.guild.id}' ORDER BY level + 0 DESC, xp + 0 DESC LIMIT 10")
+            # Ordering - Limit is 10
+            cursor.execute(f"SELECT userid, level, xp from users WHERE guildid = '{ctx.guild.id}' ORDER BY level + 0 DESC, xp + 0 DESC LIMIT 10")
 
-        # Fectch all result
-        end = cursor.fetchall()
+            # Fectch all result
+            end = cursor.fetchall()
 
-        # Embed
-        embed = discord.Embed(title="Leaderboard Top 10", color=discord.Color.green())
-        for i, x in enumerate(end, 1): # End is the ending number and 1 is the start number. This is a loop
-            embed.add_field(name=f"#{i}", value=f"Name: <@{x[0]}>\n Level: {x[1]}\n XP: {x[2]}", inline=False) # I is number so like #1 and the others are labled
+            # Embed
+            embed = discord.Embed(title=f"{ctx.guild.name}'s Leaderboard: Top 10", description=f"All time in this guild: {ctx.guild.name}", color=discord.Color.green())
+            for i, x in enumerate(end, 1): # End is the ending number and 1 is the start number. This is a loop
+                embed.add_field(name=f"#{i}", value=f"Name: <@{x[0]}>\n Level: {x[1]}\n XP: {x[2]}", inline=False) # I is number so like #1 and the others are labled
 
-        # Sending the embed
-        await ctx.send(embed=embed)
+            # Sending the embed
+            await ctx.send(embed=embed)
+            return
+        if all_time == "True" or 'true':
+            # DB info
+            db = sqlite3.connect('db/leveling.db')
+            cursor = db.cursor()
 
+            # Ordering - Limit is 10
+            cursor.execute(f"SELECT userid, level, xp from users ORDER BY level + 0 DESC, xp + 0 DESC LIMIT 10")
+
+            # Fectch all result
+            end = cursor.fetchall()
+
+            # Embed
+            embed = discord.Embed(title=f"All Time Leaderboard: Top 10", description="All time in every guild", color=discord.Color.green())
+            for i, x in enumerate(end, 1): # End is the ending number and 1 is the start number. This is a loop
+                embed.add_field(name=f"#{i}", value=f"Name: <@{x[0]}>\n Level: {x[1]}\n XP: {x[2]}", inline=False) # I is number so like #1 and the others are labled
+
+            # Sending the embed
+            await ctx.send(embed=embed)
+            return
 
 def setup(bot):
     bot.add_cog(levelingsys(bot))

@@ -23,8 +23,8 @@ class helpcommand(commands.Cog):
 
 
     @help.command()
-    async def rank(self, ctx):
-        embed = discord.Embed(title="Rank", description="Command to set the user's Stats")
+    async def level(self, ctx):
+        embed = discord.Embed(title="Level", description="Command to set the user's Stats")
         embed.add_field(name="Usage", value="rank [member]")
         await ctx.send(embed=embed)
 

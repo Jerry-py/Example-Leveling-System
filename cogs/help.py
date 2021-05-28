@@ -9,7 +9,7 @@ class helpcommand(commands.Cog):
     @commands.group(invoke_without_command=True)
     async def help(self, ctx):
         embed = discord.Embed(title="Help")
-        embed.add_field(name="Rank", value="Shows a member's rank")
+        embed.add_field(name="Level", value="Shows a member's rank")
         embed.add_field(name="Leaderboard", value="Shows the top 10 in the leaderboard")
         embed.add_field(name="Set", value="Sets a user's xp or level")
         embed.set_thumbnail(url=self.bot.user.avatar_url)

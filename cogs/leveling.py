@@ -10,8 +10,10 @@ class levelingsys(commands.Cog):
     @commands.group(invoke_without_command=True)
     @commands.is_owner()
     async def set(self, ctx):
+        # Set commands
         await ctx.send("USE `set xp` or `set level`")
 
+    # Set xp for a user
     @set.command()
     @commands.is_owner()
     async def xp(self, ctx, member: discord.Member=None, *, amount=None):
@@ -35,7 +37,7 @@ class levelingsys(commands.Cog):
         db.commit()
         await ctx.send("Done")
 
-
+    # Set level for a user
     @set.command()
     @commands.is_owner()
     async def level(self, ctx, member: discord.Member=None, *, amount=None):
@@ -142,7 +144,7 @@ class levelingsys(commands.Cog):
                 db.commit()
 
 
-    @commands.command()
+    @commands.command(aliases=["rank", "level"])
     async def rank(self, ctx, member: discord.Member=None):
         if member is None:
             member = ctx.author

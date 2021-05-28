@@ -16,6 +16,9 @@ The source code of the Discord bot ConchBot. The bot is **entirely** open source
 
 Also read liscense before doing. Please credit [Jerry.py](https://github.com/Jerry-py) if you want use this/self hosting
 
+Credits to [pp_swag](https://github.com/PPswag) and [invalid-user](https://github.com/andrewthederp) for helping me
+
+
 **Not crediting us will get you a copyright strike**
 
 

@@ -7,6 +7,58 @@ class levelingsys(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.group(invoke_without_command=True)
+    @commands.is_owner()
+    async def set(self, ctx):
+        await ctx.send("USE `set xp` or `set level`")
+
+    @set.command()
+    @commands.is_owner()
+    async def xp(self, ctx, member: discord.Member=None, *, amount=None):
+        if member is None:
+            await ctx.send("You need to mention them")
+        if amount is None:
+            await ctx.send("You need to put a amount")
+        db = sqlite3.connect("./db/leveling.db")
+        cursor = db.cursor()
+        cursor.execute(f"SELECT userid FROM users WHERE guildid = '{ctx.guild.id}'")
+        result = cursor.fetchone()
+        if result is None:
+            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp) VALUES(?, ?, ?, ?, ?)")
+            val = (str(ctx.guild.id), str(ctx.author.id), 1, amount, 100)
+            cursor.execute(sql, val)
+            db.commit()
+            return
+        sql = ("UPDATE users SET xp = ? WHERE guildid = ? and userid = ?")
+        val = (amount, str(ctx.guild.id), str(member.id))
+        cursor.execute(sql, val)
+        db.commit()
+        await ctx.send("Done")
+
+
+    @set.command()
+    @commands.is_owner()
+    async def level(self, ctx, member: discord.Member=None, *, amount=None):
+        if member is None:
+            await ctx.send("You need to mention them")
+        if amount is None:
+            await ctx.send("You need to put a amount")
+        db = sqlite3.connect("./db/leveling.db")
+        cursor = db.cursor()
+        cursor.execute(f"SELECT userid FROM users WHERE guildid = '{ctx.guild.id}'")
+        result = cursor.fetchone()
+        if result is None:
+            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp) VALUES(?, ?, ?, ?, ?)")
+            val = (str(ctx.guild.id), str(ctx.author.id), amount, 10, 100)
+            cursor.execute(sql, val)
+            db.commit()
+            return
+        sql = ("UPDATE users SET level = ? WHERE guildid = ? and userid = ?")
+        val = (amount, str(ctx.guild.id), str(member.id))
+        cursor.execute(sql, val)
+        db.commit()
+        await ctx.send("Done")
+    
 
     @commands.Cog.listener()
     async def on_member_join(self, member):

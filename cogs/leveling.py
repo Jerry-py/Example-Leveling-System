@@ -210,7 +210,7 @@ class levelingsys(commands.Cog):
         cursor = db.cursor()
 
         # Ordering - Limit is 10
-        cursor.execute(f"SELECT userid, level, xp from users ORDER BY level + 0 DESC LIMIT 10")
+        cursor.execute(f"SELECT userid, level, xp from users WHERE guildid = '{ctx.guild.id}' ORDER BY level + 0 DESC, xp + 0 DESC LIMIT 10")
 
         # Fectch all result
         end = cursor.fetchall()

@@ -193,7 +193,7 @@ class levelingsys(commands.Cog):
             percentage_progress = (100/lvl_up_xp * exp)
 
             # The embed
-            embed = discord.Embed(title=f"{member.name}'s Rank") # The user's name
+            embed = discord.Embed(title=f"{member.name}'s Rank", color=discord.Color.blue()) # The user's name
             embed.add_field(name="Level:", value=level) # The users's level
             embed.add_field(name="XP:", value=f"{exp}/{level_up_xp}") # The user's xp
             embed.add_field(name="Rank:", value=f"{rank}/{ctx.guild.member_count}") # The user's rank
@@ -216,7 +216,7 @@ class levelingsys(commands.Cog):
         end = cursor.fetchall()
 
         # Embed
-        embed = discord.Embed(title="Leaderboard Top 10")
+        embed = discord.Embed(title="Leaderboard Top 10", color=discord.Color.green())
         for i, x in enumerate(end, 1): # End is the ending number and 1 is the start number. This is a loop
             embed.add_field(name=f"#{i}", value=f"Name: <@{x[0]}>\n Level: {x[1]}\n XP: {x[2]}", inline=False) # I is number so like #1 and the others are labled
 

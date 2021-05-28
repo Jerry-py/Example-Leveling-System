@@ -28,6 +28,7 @@ class helpcommand(commands.Cog):
         embed.add_field(name="Usage:", value="**unload [module name]**")
         embed.add_field(name="Usage:", value="**reload [module name]**")
         embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}", icon_url=ctx.author.avatar_url)
         await ctx.send(embed=embed)
         
  

@@ -8,7 +8,7 @@ class helpcommand(commands.Cog):
 
     @commands.command()
     async def help(self, ctx):
-        embed = discord.Embed(title="Help")
+        embed = discord.Embed(title="Help", description="Commands", color=discord.Color.red())
         embed.add_field(name="Level", value="Shows a member's rank\n Usage:\n rank [member]")
         embed.add_field(name="Leaderboard", value="Shows the top 10 in the leaderboard\n Usage:\n leaderboard")
         embed.add_field(name="Set", value="Sets a user's xp or level\n Usage:\n set [level/xp] [member] [amount]")

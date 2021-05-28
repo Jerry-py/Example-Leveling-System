@@ -40,7 +40,7 @@ class levelingsys(commands.Cog):
     # Set level for a user
     @set.command()
     @commands.is_owner()
-    async def levels(self, ctx, member: discord.Member=None, *, amount=None):
+    async def level(self, ctx, member: discord.Member=None, *, amount=None):
         if member is None:
             await ctx.send("You need to mention them")
         if amount is None:
@@ -144,7 +144,7 @@ class levelingsys(commands.Cog):
                 db.commit()
 
 
-    @commands.command(aliases=["rank", "level"])
+    @commands.command()
     async def rank(self, ctx, member: discord.Member=None):
         if member is None:
             member = ctx.author

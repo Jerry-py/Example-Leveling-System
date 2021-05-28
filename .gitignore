@@ -1,3 +1,8 @@
+# Visual Studio Code
 __pycache__
+
+# Venv
 venv
+
+# Secrets/Config
 .env

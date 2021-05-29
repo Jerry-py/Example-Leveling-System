@@ -89,7 +89,8 @@ class CommandErrorHandler(commands.Cog):
             else:
                 await ctx.send("You were supposed to type that but you ended typing that")
                 return
-
+        else:
+            raise error
 
 
 def setup(bot):

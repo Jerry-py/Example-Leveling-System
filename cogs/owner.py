@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.ext.commands.core import command
 from discord.ext.commands.errors import MissingPermissions
 from jishaku.codeblocks import codeblock_converter
 import asyncio
@@ -90,6 +91,12 @@ class owner(commands.Cog):
             await ctx.send('Loaded module: `{}.py`'.format(module))
         print("------")
         print(f"Loaded `{module}` Cog")
+
+    @commands.command()
+    @commands.is_owner()
+    async def eval(self, ctx, *, code: codeblock_converter):
+        cog = self.bot.get_cog("Jishaku")
+        await cog.jsk_python(ctx, argument=code)
 
 def setup(bot):
     bot.add_cog(owner(bot))

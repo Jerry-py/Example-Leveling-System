@@ -49,7 +49,7 @@ class utils(commands.Cog):
         # Anything else
         else:
             # Get the command
-            obj = self.client.get_command(command_name.replace('.', ' '))
+            obj = self.bot.get_command(command_name.replace('.', ' '))
 
             # If command cannot be found
             if obj is None:
@@ -79,6 +79,7 @@ class utils(commands.Cog):
 
             embed.add_field(name="Command Source:", value=final_url, inline=False)
             embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested {ctx.author.name}#{ctx.author.discriminator}")
+            embed.set_thumbnail(url=self.bot.user.avatar_url)
             await ctx.send(embed=embed)
 
 
@@ -96,7 +97,7 @@ class utils(commands.Cog):
         embed = discord.Embed(title=f'{self.bot.user.name} Stats', colour=ctx.author.colour)
         embed.add_field(name="Bot Name:", value=self.bot.user.name)
         embed.add_field(name="Bot Id:", value=self.bot.user.id)
-        embed.add_field(name="Bot Version:", value="1.3.4")
+        embed.add_field(name="Bot Version:", value="1.0.1")
         embed.add_field(name="Python Version:", value=platform.python_version())
         embed.add_field(name="Discord.py Version:", value=discord.__version__)
         embed.add_field(name="Total Guilds:", value=len(self.bot.guilds))
@@ -116,6 +117,8 @@ class utils(commands.Cog):
         embed.add_field(name="Uptime Lapse:", value=text)
         embed.add_field(name="Bot Developers:", value="Jerry.py#7611")
         embed.add_field(name="Bot Developers Ids:", value="Jerry.py - 789535039406473276")
+        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested {ctx.author.name}#{ctx.author.discriminator}")
         await ctx.send(embed=embed)
 
 

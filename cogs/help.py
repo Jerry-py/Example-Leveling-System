@@ -127,7 +127,7 @@ class helpcommand(commands.Cog):
                 embed.add_field(name="Description:", value=cmds[command].get("desc"), inline=False)
                 embed.add_field(name="Aliases:", value=cmds[command].get("aliases"), inline=False)
                 embed.add_field(name="Usage:", value=cmds[command].get("usage"), inline=False)
-                embed.set_footer(text="For a list of command categories, use help command.")
+                embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}", icon_url=ctx.author.avatar_url)
                 await ctx.send(embed=embed)
             except:
                 await ctx.send("Command not found")

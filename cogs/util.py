@@ -83,7 +83,7 @@ class utils(commands.Cog):
             await ctx.send(embed=embed)
 
 
-    @commands.command(aliases=["statistics", "info", "information"])
+    @commands.command(aliases=["statistics"])
     @commands.cooldown(1, 5, commands.BucketType.user) 
     async def stats(self, ctx):
         delta_uptime = datetime.datetime.utcnow() - self.bot.launch_time

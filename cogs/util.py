@@ -18,6 +18,7 @@ class utils(commands.Cog):
 
 
     @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
     async def uptime(self, ctx):
         delta_uptime = datetime.datetime.utcnow() - self.bot.launch_time
         hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)

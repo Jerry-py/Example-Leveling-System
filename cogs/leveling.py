@@ -145,6 +145,7 @@ class levelingsys(commands.Cog):
 
 
     @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
     async def rank(self, ctx, member: discord.Member=None):
         if member is None:
             member = ctx.author
@@ -204,6 +205,7 @@ class levelingsys(commands.Cog):
 
 
     @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
     async def leaderboard(self, ctx, *, all_time=None):
         if all_time is None:
             # DB info

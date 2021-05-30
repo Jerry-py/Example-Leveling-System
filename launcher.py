@@ -1,11 +1,11 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import os
-import jishaku
 from dotenv import load_dotenv
 import os
-import time
 from datetime import datetime
+from itertools import cycle
+import asyncio
 
 env = load_dotenv()
 
@@ -36,6 +36,16 @@ def load_cogs():
     print("------")
 
 
+@tasks.loop(seconds=10.0)
+async def status_loop():
+    statuses = cycle(["Watching members level up", 
+        "Watching Jerry.py", ">help", f"Watching {len(set(bot.get_all_members()))}"
+        f"users and {len(bot.guilds)} servers."])
+    while True:
+        await bot.change_presence(activity=discord.Game(next(statuses)))
+        await asyncio.sleep(15)
+
+
 @bot.event
 async def on_ready():
     # Load Cogs
@@ -43,6 +53,13 @@ async def on_ready():
 
     # When ready
     print("READY")
+
+    # Status
+    await status_loop()
+
+
+
+    
 
 
 # Run bot

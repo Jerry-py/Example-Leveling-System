@@ -271,6 +271,7 @@ class levelingsys(commands.Cog):
             return
 
     @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
     async def image(self, ctx, url):
         # DB info
         db = sqlite3.connect('db/leveling.db')

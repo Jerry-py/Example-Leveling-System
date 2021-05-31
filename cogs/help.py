@@ -8,14 +8,14 @@ cmds = {
         "desc": "Shows a member's rank",
         "aliases": "None",
         "usage": "```rank [member]```",
-        "cooldown" : "5s"
+        "cooldown" : "`5`s"
     },
     "leaderboard" : {
         "title": "Leaderboard command",
         "desc": "Shows the top 10 in the leaderboard. **True** is **global** and **False** is **guild only**",
         "aliases": "None",
         "usage": "```leaderboard [true/false]```",
-        "cooldown" : "5s"
+        "cooldown" : "`5`s"
     },
     "set" : {
         "title": "set command",
@@ -71,21 +71,21 @@ cmds = {
         "desc": "See Bot's Uptime",
         "aliases": "None",
         "usage" : "```uptime```",
-        "cooldown" : "5s"
+        "cooldown" : "`5`s"
     },
     "source" : {
         "title": "Source command",
         "desc": "Get the bot source code",
         "aliases": "github/code",
         "usage" : "```uptime```",
-        "cooldown" : "5s"
+        "cooldown" : "`5`s"
     },
     "stats" : {
         "title": "Stats command",
         "desc": "See bot's stats",
         "aliases": "statistics",
         "usage" : "```stats```",
-        "cooldown" : "5s"
+        "cooldown" : "`5`s"
     },
     "eval" : {
         "title": "Eval command",
@@ -93,6 +93,13 @@ cmds = {
         "aliases": "None",
         "usage" : "```stats```",
         "cooldown" : "None"
+    },
+    "image" : {
+        "title": "Image command",
+        "desc": "Change background for rank command",
+        "aliases": "None",
+        "usage" : "```image [url]```",
+        "cooldown" : "`5`s"
     }
 }
 
@@ -113,11 +120,11 @@ class helpcommand(commands.Cog):
             embed.add_field(name="Usage:", value="```\nrank [member]```")
             embed.add_field(name="Usage:", value="```\nleaderboard [true/false]```")
             embed.add_field(name="Usage:", value="```\nset [level/xp] [member] [amount]```")
+            embed.add_field(name="Image", value="Change background for rank command")
             embed.add_field(name="Restart", value="Restart the Bot")
-            embed.add_field(name="Shutdown", value="Shutdowns the bot")
             embed.add_field(name="Refresh", value="Refresh the current code with the code on github")
             embed.add_field(name="Usage:", value="```\nrestart```")
-            embed.add_field(name="Usage:", value="```\nshutdown```")
+            embed.add_field(name="Usage:", value="```\nimage [url]```")
             embed.add_field(name="Usage:", value="```\nrefresh```")
             embed.add_field(name="Load", value="Load a module")
             embed.add_field(name="Unload", value="Unload a module")

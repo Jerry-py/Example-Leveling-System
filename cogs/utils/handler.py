@@ -27,10 +27,6 @@ class CommandErrorHandler(commands.Cog):
             await ctx.send("You don't have the permissions to do that! Please contact a server admin to do that for you.")
             return
 
-        if isinstance(error, commands.ChannelNotFound):
-            await ctx.send("Channel not found.")
-            return
-        
         
         if isinstance(error, commands.MemberNotFound):
             await ctx.send("That member doesn't exist.")
@@ -44,7 +40,7 @@ class CommandErrorHandler(commands.Cog):
             return
 
         if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
-            await ctx.send("There are required arguements/parameters you need to input")
+            await ctx.send("There are required arguments/parameters you need to input")
             return
         else:
             raise error

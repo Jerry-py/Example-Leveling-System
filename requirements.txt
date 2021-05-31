@@ -1,3 +1,4 @@
 discord
 jishaku
 python-dotenv
+vacefron.py

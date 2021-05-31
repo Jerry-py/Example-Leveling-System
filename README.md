@@ -25,6 +25,17 @@ Credits to [pp_swag](https://github.com/PPswag) and [invalid-user](https://githu
 ## How to Self-Host
 Follow the instructions to host your own ConchBot
 
+### Easy Setup
+
+**Window Support only**
+
+1. Run `install.bat`
+2. Run `setup.py` - `python setup.py`
+3. Run `start.bat`
+
+
+
+### Normal Setup
 1. Create&Activate a/the venv
 
 It is very simple to do this
@@ -91,6 +102,19 @@ Running the bot is as simple as you think since we set up everything. By doing
 ```
 python launcher.py
 ```
+
+
+### Heroku Setup 
+
+You could set it up with the cli but thi is a github way
+
+1. Create a copy of the repo
+
+2. Open heroku website
+
+3. Link the repo to heroku
+
+Where in deploy tab. Scroll down to github. Click on it and link the copy of the repo and scroll down and press deploy and it should work
 
 
 ## Contribute

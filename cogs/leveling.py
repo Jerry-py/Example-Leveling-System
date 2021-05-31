@@ -1,6 +1,10 @@
 import discord
 from discord.ext import commands
 import sqlite3
+import vacefron
+
+vac_api = vacefron.Client()
+
 
 
 class levelingsys(commands.Cog):
@@ -26,11 +30,10 @@ class levelingsys(commands.Cog):
         cursor.execute(f"SELECT userid FROM users WHERE guildid = '{ctx.guild.id}'")
         result = cursor.fetchone()
         if result is None:
-            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp) VALUES(?, ?, ?, ?, ?)")
-            val = (str(ctx.guild.id), str(ctx.author.id), 1, amount, 100)
+            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp, rank_image_url) VALUES(?, ?, ?, ?, ?, ?)")
+            val = (str(ctx.guild.id), str(ctx.author.id), 1, amount, 100, "https://media.discordapp.net/attachments/818899477372600434/848947456334495794/Leveling_System_Background_3.jpg")
             cursor.execute(sql, val)
             db.commit()
-            return
         sql = ("UPDATE users SET xp = ? WHERE guildid = ? and userid = ?")
         val = (amount, str(ctx.guild.id), str(member.id))
         cursor.execute(sql, val)
@@ -50,8 +53,8 @@ class levelingsys(commands.Cog):
         cursor.execute(f"SELECT userid FROM users WHERE guildid = '{ctx.guild.id}'")
         result = cursor.fetchone()
         if result is None:
-            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp) VALUES(?, ?, ?, ?, ?)")
-            val = (str(ctx.guild.id), str(ctx.author.id), amount, 10, 100)
+            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp, rank_image_url) VALUES(?, ?, ?, ?, ?, ?)")
+            val = (str(ctx.guild.id), str(ctx.author.id), amount, 10, 100, "https://media.discordapp.net/attachments/818899477372600434/848947456334495794/Leveling_System_Background_3.jpg")
             cursor.execute(sql, val)
             db.commit()
             return
@@ -66,8 +69,8 @@ class levelingsys(commands.Cog):
     async def on_member_join(self, member):
         db = sqlite3.connect("./db/leveling.db")
         cursor = db.cursor()
-        sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp) VALUES(?, ?, ?, ?, ?)")
-        val = (str(member.guild.id), str(member.id), 1, 0, 100)
+        sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp, rank_image_url) VALUES(?, ?, ?, ?, ?, ?)")
+        val = (str(member.guild.id), str(member.id), 1, 0, 100, "https://media.discordapp.net/attachments/818899477372600434/848947456334495794/Leveling_System_Background_3.jpg")
         cursor.execute(sql, val)
         db.commit()
 
@@ -100,8 +103,8 @@ class levelingsys(commands.Cog):
         # If the db can't find anything
         if result is None:
             # Insert the user
-            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp) VALUES(?, ?, ?, ?, ?)")
-            val = (str(message.guild.id), str(message.author.id), 1, 10, 100)
+            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp, rank_image_url) VALUES(?, ?, ?, ?, ?, ?)")
+            val = (str(message.guild.id), str(message.author.id), 1, 10, 100, "https://media.discordapp.net/attachments/818899477372600434/848947456334495794/Leveling_System_Background_3.jpg")
             cursor.execute(sql, val)
 
             # Commit to the db
@@ -155,44 +158,60 @@ class levelingsys(commands.Cog):
         cursor = db.cursor()
 
         # Get everything except guildid
-        cursor.execute(f"SELECT userid, level, xp, level_up_xp FROM users WHERE guildid = '{ctx.guild.id}' AND userid = '{member.id}'")
+        cursor.execute(f"SELECT userid, level, xp, level_up_xp, rank_image_url FROM users WHERE guildid = '{ctx.guild.id}' AND userid = '{member.id}'")
 
         # Get a/one result
         result = cursor.fetchone()
 
         # If then user is not in db
         if result is None:
-            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp) VALUES(?, ?, ?, ?, ?)")
-            val = (str(ctx.guild.id), str(member.id), 1, 10, 100)
+            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp, rank_image_url) VALUES(?, ?, ?, ?, ?, ?)")
+            val = (str(ctx.guild.id), str(member.id), 1, 10, 100, "https://media.discordapp.net/attachments/818899477372600434/848947456334495794/Leveling_System_Background_3.jpg")
             cursor.execute(sql, val)
             db.commit()
             return
 
         # If they are in db
-        else:
-            # Info
-            xp = str(result[2])
-            level_up_xp = result[3]
+        # Info
+        xp = str(result[2])
+        level_up_xp = result[3]
 
-            # Rank in leaderboard
-            rank = 1
+        # Rank in leaderboard
+        rank = 1
 
-            # Find what rank the user is at
-            for value in cursor:
-                if xp < value[0]:
-                    rank += 1
+        # Find what rank the user is at
+        for value in cursor:
+            if xp < value[0]:
+                rank += 1
 
-            # More info
-            exp = int(result[2])
-            level = int(result[1])
-            lvl_up_xp = int(result[3])
+        # More info
+        exp = int(result[2])
+        level = int(result[1])
+        lvl_up_xp = int(result[3])
 
-            # Boxes for progress bar
-            boxes = int((exp/(200*((1/2) * level)))*20)
+        # Boxes for progress bar
+        boxes = int((exp/(200*((1/2) * level)))*20)
 
-            # The percentage progress
-            percentage_progress = (100/lvl_up_xp * exp)
-
+        # The percentage progress
+        percentage_progress = (100/lvl_up_xp * exp)
+        try:
+            level_up_xp = int(result[3])
+            gen_card = await vac_api.rank_card(
+            username = f"{member.name}#{member.discriminator}",
+            avatar = member.avatar_url_as(format = "png"), 
+            level = int(level), 
+            rank = rank, 
+            current_xp = exp,
+            next_level_xp = level_up_xp,
+            previous_level_xp = 0,
+            custom_background = f"{result[4]}", 
+            xp_color = "3399CC",
+            is_boosting = bool(member.premium_since), 
+            circle_avatar = True  
+            )
+            rank_image = discord.File(fp = await gen_card.read(), filename = f"{member.name}_rank.png")
+            await ctx.send(file = rank_image)
+        except:
             # The embed
             embed = discord.Embed(title=f"{member.name}'s Rank", color=discord.Color.blue()) # The user's name
             embed.add_field(name="Level:", value=level) # The users's level
@@ -201,6 +220,11 @@ class levelingsys(commands.Cog):
             embed.add_field(name=f"Progress Bar {percentage_progress}%:", value=boxes * "🟦" + (20-boxes) * "⬜", inline=False) # The user's percentage progress&progress bar
             embed.set_thumbnail(url=member.avatar_url) # Show the user's image
             await ctx.send(embed=embed) # Send the embed
+
+
+
+
+        
 
 
 
@@ -245,6 +269,26 @@ class levelingsys(commands.Cog):
             # Sending the embed
             await ctx.send(embed=embed)
             return
+
+    @commands.command()
+    async def image(self, ctx, url):
+        # DB info
+        db = sqlite3.connect('db/leveling.db')
+        cursor = db.cursor()
+
+        cursor.execute(f"SELECT rank_image_url FROM users WHERE guildid = '{ctx.guild.id}' AND userid = '{ctx.author.id}'")
+        result = cursor.fetchone()
+        if result is None:
+            sql = ("INSERT INTO users(guildid, userid, level, xp, level_up_xp, rank_image_url) VALUES(?, ?, ?, ?, ?, ?)")
+            val = (str(ctx.guild.id), str(ctx.author.id), 1, 10, 100, "https://media.discordapp.net/attachments/818899477372600434/848947456334495794/Leveling_System_Background_3.jpg")
+            cursor.execute(sql, val)
+            db.commit()
+        sql = ("UPDATE users SET rank_image_url = ? WHERE guildid = ? and userid = ?")
+        val = (str(url), str(ctx.guild.id), str(ctx.author.id))
+        cursor.execute(sql, val)
+        db.commit()
+        await ctx.send(f"Image has been set to {url}")
+    
 
 def setup(bot):
     bot.add_cog(levelingsys(bot))

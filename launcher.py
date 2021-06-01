@@ -6,6 +6,7 @@ import os
 from datetime import datetime
 from itertools import cycle
 import asyncio
+import sqlite3
 
 env = load_dotenv()
 
@@ -46,10 +47,28 @@ async def status_loop():
         await asyncio.sleep(15)
 
 
+def db_setup():
+    db = sqlite3.connect("./db/leveling.db")
+    cursor = db.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS users (
+        guildid text PRIMARY KEY,
+        userid text,
+        level text, 
+        xp text,
+        level_up_xp text,
+        rank_image_url text 
+        )""")
+
 @bot.event
 async def on_ready():
     # Load Cogs
     load_cogs()
+    print("Setting up DB...")
+    print("Checking DB...")
+    print("------")
+    db_setup()
+    print("Done")
+    print("------")
 
     # When ready
     print("READY")

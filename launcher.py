@@ -40,7 +40,7 @@ def load_cogs():
 @tasks.loop(seconds=10.0)
 async def status_loop():
     statuses = cycle(["Watching members level up", 
-        "Watching Jerry.py", ">help", f"Watching {len(set(bot.get_all_members()))}"
+        "Watching Jerry.py", ">help", f"Watching {len(set(bot.get_all_members()))} "
         f"users and {len(bot.guilds)} servers."])
     while True:
         await bot.change_presence(activity=discord.Game(next(statuses)))

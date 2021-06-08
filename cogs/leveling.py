@@ -57,27 +57,28 @@ class levelingsys(commands.Cog):
 
         # Drawing on the background image
         draw1 = ImageDraw.Draw(background) 
-
+        
+        # Level Text
         text_size = draw.textsize(f"{level}", font=big_font)
         offset_x = 1000-15 - text_size[0]
-        offset_y = 5 
+        offset_y = 15
         draw.text((offset_x, offset_y), f"{level}", font=big_font, fill="#11ebf2")
-        text_size = draw.textsize('Level:', font=small_font)
+        text_size = draw.textsize('Level:', font=medium_font)
 
         offset_x -= 5 + text_size[0]
         offset_y = 35
-        draw.text((offset_x, offset_y), "Level:", font=small_font, fill="#11ebf2")
+        draw.text((offset_x, offset_y), "Level:", font=medium_font, fill="#11ebf2")
 
-        # Placing Rank Text (right upper part)
+        # Rank Text
         text_size = draw.textsize(f"#{rank}", font=big_font)
         offset_x -= 15 + text_size[0]
-        offset_y = 8
+        offset_y = 18
         draw.text((offset_x, offset_y), f"#{rank}", font=big_font, fill="#fff")
 
-        text_size = draw.textsize("Rank:", font=small_font)
+        text_size = draw.textsize("Rank:", font=medium_font)
         offset_x -= 5 + text_size[0]
         offset_y = 35
-        draw.text((offset_x, offset_y), "Rank:", font=small_font, fill="#fff")
+        draw.text((offset_x, offset_y), "Rank:", font=medium_font, fill="#fff")
 
         # Progress Bar
         bar_offset_x = logo.size[0] + 20 + 40
@@ -100,22 +101,17 @@ class levelingsys(commands.Cog):
 
         # Member Name Text
         member_name_text = f"{member.display_name}"
-        text_size = draw1.textsize(member_name_text, font=big_font)
+        text_size = draw1.textsize(member_name_text, font=medium_font)
         text_offset_x = bar_offset_x - 20
         text_offset_y = bar_offset_y - text_size[1] - 80
-        draw1.text((text_offset_x, text_offset_y), member_name_text, font=big_font, fill="#fff")
+        draw1.text((text_offset_x, text_offset_y), member_name_text, font=medium_font, fill="#fff")
 
         # Member Discriminator Text
         member_discriminator_text = f"#{member.discriminator}"
         text_offset_x += text_size[0] + 10
-        text_size = draw1.textsize(member_discriminator_text, font=medium_font)
+        text_size = draw1.textsize(member_discriminator_text, font=small_font)
         text_offset_y = bar_offset_y - text_size[1] - 90
-        draw1.text((text_offset_x, text_offset_y), member_discriminator_text, font=medium_font, fill="#727175")
-        
-
-        # Level Text
-        level_text = f"Level: {level}"
-        
+        draw1.text((text_offset_x, text_offset_y), member_discriminator_text, font=small_font, fill="#727175")
 
         # XP Text
         xp_text = f"XP: {xp}/{level_up_xp}"
@@ -131,11 +127,6 @@ class levelingsys(commands.Cog):
         text_offset_x = bar_offset_x - 10
         text_offset_y = bar_offset_y - text_size[1] - 5
         draw1.text((text_offset_x, text_offset_y), percentage_text, font=other_font, fill="#fff")
-
-        # Rank Text
-        rank_text = f"#{rank}/{member.guild.id}"
-
-        
 
         bytes = io.BytesIO()
         background.save(bytes, 'JPEG')

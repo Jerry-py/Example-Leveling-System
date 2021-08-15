@@ -147,9 +147,9 @@ class levelingsys(commands.Cog):
     @commands.is_owner()
     async def xp(self, ctx, member: discord.Member=None, *, amount=None):
         if member is None:
-            await ctx.send("You need to mention them")
+            return await ctx.send("You need to mention them")
         if amount is None:
-            await ctx.send("You need to put a amount")
+            return await ctx.send("You need to put a amount")
         db = sqlite3.connect("./db/leveling.db")
         cursor = db.cursor()
         cursor.execute(f"SELECT userid FROM users WHERE guildid = '{ctx.guild.id}'")
@@ -170,9 +170,9 @@ class levelingsys(commands.Cog):
     @commands.is_owner()
     async def level(self, ctx, member: discord.Member=None, *, amount=None):
         if member is None:
-            await ctx.send("You need to mention them")
+            return await ctx.send("You need to mention them")
         if amount is None:
-            await ctx.send("You need to put a amount")
+            return await ctx.send("You need to put a amount")
         db = sqlite3.connect("./db/leveling.db")
         cursor = db.cursor()
         cursor.execute(f"SELECT userid FROM users WHERE guildid = '{ctx.guild.id}'")
@@ -318,12 +318,6 @@ class levelingsys(commands.Cog):
         file = discord.File(rank_card, f"{member.display_name}_rank_card.png")
         await ctx.send(file=file)
             
-        
-
-
-        
-
-
 
     @commands.command()
     @commands.cooldown(1, 5, commands.BucketType.user)

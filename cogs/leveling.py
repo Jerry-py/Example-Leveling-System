@@ -17,7 +17,6 @@ class levelingsys(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # Credits to Coding Adda -> https://github.com/Wiper-R/Basic-Bot/blob/ea961dc6f793c5d019103b6a4b68c2e79aa96dda/cogs/levelling.py#L187#L61
 
     async def make_rank_image(self, member: discord.Member, rank, level, xp, level_up_xp, background):
         user_avatar_image = str(member.avatar_url_as(format='png', size=512))
